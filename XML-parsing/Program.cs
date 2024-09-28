@@ -1,13 +1,16 @@
-﻿using System.IO.Compression;
+﻿using System.Diagnostics;
+using System.IO.Compression;
+using System.Text;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using System.Xml;
 using System.Xml.Linq;
 
 namespace XML_parsing;
-
+//TODO рефакторинг
 internal static class Program
 {
+    //TODO убрать лишние поля
     private static DateOnly _date;
     private static XDocument _objectXml = new XDocument();
     private static XDocument _levelXml = new XDocument();
@@ -30,6 +33,13 @@ internal static class Program
                 Console.WriteLine(string.Join(" ", item));
             }
         }
+        CreateDocument();
+        var p = new Process();
+        p.StartInfo = new ProcessStartInfo("index.html")
+        { 
+            UseShellExecute = true 
+        };
+        p.Start();
     }
 
     private static async Task GetFile()
@@ -92,20 +102,49 @@ internal static class Program
 
     private static IEnumerable<IGrouping<string, string[]>> Query()
     {
-        var groupedResult = _objectXml.Descendants("OBJECT").Join(_levelXml.Descendants("OBJECTLEVEL"), x => x.Attribute("LEVEL").Value, y => y.Attribute("LEVEL").Value, (x, y)
-                => new
+        var groupedResult = _objectXml.Descendants("OBJECT")
+            .Join(_levelXml.Descendants("OBJECTLEVEL"), x => x.Attribute("LEVEL").Value,
+                y => y.Attribute("LEVEL").Value, (x, y) => new
                 {
                     IsActive = x.Attribute("ISACTIVE"), Name = x.Attribute("NAME"), TypeName = x.Attribute("TYPENAME"),
                     Level = x.Attribute("LEVEL"), LevelName = y.Attribute("NAME")
                 })
             .Where(x => x.IsActive.Value == "1")
             .Select(x => new [] {x.Name.Value, x.TypeName.Value, x.Level.Value, x.LevelName.Value})
-            .OrderBy(x => x[0]).GroupBy(x => x[2]);
+            .OrderBy(x => x[0]).OrderBy(x => x[2]).GroupBy(x => x[3]);
         return groupedResult;
     }
 
     private static void CreateDocument()
     {
+        var sb = new StringBuilder();
         
+        sb.AppendLine("<head>");
+        sb.AppendLine("<link rel=\"stylesheet\" href=\"index.css\">");
+        sb.AppendLine("</head>");
+        sb.AppendLine("<body>");
+        //TODO поправить формат даты
+        sb.AppendLine($"<h3>Отчет по добавленным адресным объектам за {_date.Day}.{_date.Month}.{_date.Year}</h3>");
+        sb.AppendLine("<hr>");
+        foreach (var group in _finalResults)
+        {
+            sb.AppendLine("<Table>");
+            sb.AppendLine($"<Caption>{group.Key}</Caption>");
+            sb.AppendLine("<TR>");
+            sb.AppendLine("<TH>Тип объекта</TH>");
+            sb.AppendLine("<TH>Наименование</TH>");
+            sb.AppendLine("</TR>");
+            foreach (var element in group)
+            {
+                sb.AppendLine("<TR>");
+                sb.AppendLine($"<TD>{element[1]}</TD>");
+                sb.AppendLine($"<TD>{element[0]}</TD>");
+                sb.AppendLine("</TR>");
+            }
+            sb.AppendLine("</Table>");
+        }
+        sb.AppendLine("</body>");
+        var s = sb.ToString();
+        File.WriteAllText("index.html", s);
     }
 }
