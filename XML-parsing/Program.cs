@@ -19,6 +19,7 @@ internal static class Program
         File.Delete("data.zip");
         File.Delete("version.txt");
         _fullXml.Save("full.xml");
+        Query();
     }
 
     private static async Task GetFile()
@@ -63,5 +64,21 @@ internal static class Program
             _fullXml = xDoc;
         else
             _fullXml.Root?.Add(xDoc.Descendants("OBJECT"));
+    }
+
+    private static void Query()
+    {
+        var result = from el in _fullXml.Descendants("OBJECT")
+            where el.Attribute("ISACTIVE")?.Value == "1"
+            select new [] {el.Attribute("NAME").Value, el.Attribute("TYPENAME").Value, el.Attribute("LEVEL").Value};
+        var groupedResult = result.OrderBy(x => x[0]).GroupBy(x => x[2]);
+        foreach (var group in groupedResult)
+        {
+            Console.WriteLine("-----------------------------------");
+            foreach (var element in group)
+            {
+                Console.WriteLine(string.Join(" ", element));
+            }
+        }
     }
 }
