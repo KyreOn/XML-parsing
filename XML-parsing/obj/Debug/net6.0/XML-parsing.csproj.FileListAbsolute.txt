@@ -1,0 +1,15 @@
+C:\Projects\XML-parsing\XML-parsing\bin\Debug\net6.0\XML-parsing.exe
+C:\Projects\XML-parsing\XML-parsing\bin\Debug\net6.0\XML-parsing.deps.json
+C:\Projects\XML-parsing\XML-parsing\bin\Debug\net6.0\XML-parsing.runtimeconfig.json
+C:\Projects\XML-parsing\XML-parsing\bin\Debug\net6.0\XML-parsing.dll
+C:\Projects\XML-parsing\XML-parsing\bin\Debug\net6.0\XML-parsing.pdb
+C:\Projects\XML-parsing\XML-parsing\obj\Debug\net6.0\XML-parsing.csproj.AssemblyReference.cache
+C:\Projects\XML-parsing\XML-parsing\obj\Debug\net6.0\XML-parsing.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\XML-parsing\XML-parsing\obj\Debug\net6.0\XML-parsing.AssemblyInfoInputs.cache
+C:\Projects\XML-parsing\XML-parsing\obj\Debug\net6.0\XML-parsing.AssemblyInfo.cs
+C:\Projects\XML-parsing\XML-parsing\obj\Debug\net6.0\XML-parsing.csproj.CoreCompileInputs.cache
+C:\Projects\XML-parsing\XML-parsing\obj\Debug\net6.0\XML-parsing.dll
+C:\Projects\XML-parsing\XML-parsing\obj\Debug\net6.0\refint\XML-parsing.dll
+C:\Projects\XML-parsing\XML-parsing\obj\Debug\net6.0\XML-parsing.pdb
+C:\Projects\XML-parsing\XML-parsing\obj\Debug\net6.0\XML-parsing.genruntimeconfig.cache
+C:\Projects\XML-parsing\XML-parsing\obj\Debug\net6.0\ref\XML-parsing.dll
