@@ -4,6 +4,8 @@
 
 hr {
   color: #0a3871;
+  margin-left: 0;
+  max-width: 60%;
 }
 
 h3 {
@@ -25,4 +27,8 @@ table, th, td {
   border-collapse: collapse;
   padding: 5px;
   width: 50%;
+}
+
+table {
+  width: 60%;
 }
